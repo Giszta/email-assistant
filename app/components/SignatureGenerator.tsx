@@ -48,7 +48,7 @@ function SignatureGenerator() {
 				onSelect={setSelectedSignature}
 				onInputChange={setSelectedSignature}
 			/>
-			<div className="flex items-center border border-gray-300 rounded-md px-4 py-0.5 h-fit">
+			<div className="flex items-center border border-gray-300 rounded-md px-4 py-0.5 h-fit text-white">
 				[{selectedSignature}
 				{timestamp}]
 			</div>
