@@ -54,7 +54,7 @@ function SignatureGenerator() {
 			</div>
 			<button
 				onClick={copyToClipboard}
-				className="px-4 py-0.5 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 h-fit"
+				className="px-4 py-0.5 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 h-fit cursor-pointer"
 			>
 				Generuj i skopiuj
 			</button>
