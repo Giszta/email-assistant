@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({
 		<button
 			onClick={onClick}
 			disabled={disabled}
-			className={`bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded 
+			className={`bg-red-500 hover:bg-red-700 text-white font-bold px-4 py-0.5 rounded-lg cursor-pointer 
         ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
 			aria-disabled={disabled}
 		>

@@ -128,7 +128,7 @@ const DropdownList: React.FC<DropdownProps> = ({
 					onClick={() => setIsOpen(true)}
 					onFocus={() => setIsOpen(true)}
 					onKeyDown={handleKeyDown}
-					className="w-full focus:outline-none text-black"
+					className="w-full focus:outline-none text-black bg-white"
 					placeholder="Type or select an option"
 				/>
 				<button
