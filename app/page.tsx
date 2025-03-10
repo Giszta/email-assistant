@@ -3,7 +3,7 @@ import SignatureGenerator from "./components/SignatureGenerator";
 import Button from "./components/Button";
 import { Accordion } from "./components/Accordion";
 import LabeledDropdown from "./components/LabeledDropdown";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
 	cribs,
 	cribColors,
@@ -17,6 +17,7 @@ import {
 	standardPhrases,
 } from "./data/database";
 import StandardPhrases from "./components/StandardPhrases";
+import EditableGrid from "./components/EditableMailTextbox";
 
 export default function Home() {
 	const [selectedCrib, setSelectedCrib] = useState<string | null>("");
@@ -24,7 +25,7 @@ export default function Home() {
 	const [selectedColor, setSelectedColor] = useState<string | null>("");
 	const [selectedSide, setSelectedSide] = useState<string | null>("");
 	const [selectedLength, setSelectedLength] = useState<string | null>("");
-	const [selectedWith, setSelectedWith] = useState<string | null>("");
+	const [selectedWidth, setselectedWidth] = useState<string | null>("");
 	const [selectedHeight, setSelectedHeight] = useState<string | null>("");
 	const [selectedMaterial, setSelectedMaterial] = useState<string | null>("");
 	const [selectedLegs, setSelectedLegs] = useState<string | null>("");
@@ -35,6 +36,7 @@ export default function Home() {
 		"",
 	]);
 	const [selectedPhrases, setSelectedPhrases] = useState<string[]>([]);
+	const [additionalChanges, setAdditionalChanges] = useState<string[]>([]);
 
 	const handleCribSelection = (selectedCrib: string | null) => {
 		setSelectedCrib(selectedCrib);
@@ -42,10 +44,10 @@ export default function Home() {
 
 	const selectedCribData = cribs.find((crib) => crib.name === selectedCrib);
 
-	const getModelsForSelectedCrib = useMemo(
-		() => selectedCribData?.models.map((model) => model.name) || [],
-		[selectedCribData]
-	);
+	const getModelsForSelectedCrib = useMemo(() => {
+		if (!selectedCribData) return [];
+		return selectedCribData.models?.map((model) => model.name) || [];
+	}, [selectedCribData]);
 
 	const availableColors =
 		typeof selectedCribData?.getAvailableColors === "function" && selectedModel
@@ -53,13 +55,13 @@ export default function Home() {
 			: [];
 	const sortedColors = [
 		...availableColors,
-		cribColors.filter((color) => !availableColors.includes(color)),
-	].flat();
+		...cribColors.filter((color) => !availableColors.includes(color)),
+	];
 
-	const getHeightsForSelectedCrib = useMemo(
-		() => selectedCribData?.heights || [],
-		[selectedCribData]
-	);
+	const getHeightsForSelectedCrib = useMemo(() => {
+		if (!selectedCribData) return [];
+		return selectedCribData?.heights || [];
+	}, [selectedCribData]);
 
 	const getMaterialsForSelectedCrib = useMemo(
 		() => selectedCribData?.material || [],
@@ -94,7 +96,7 @@ export default function Home() {
 	);
 	const sortedLegs = [
 		...(defaultLegs ? [`⭐ ${defaultLegs}`] : []),
-		...availableLegs.filter((legs) => legs !== defaultLegs),
+		...availableLegs.filter((legs) => legs && legs !== defaultLegs),
 	];
 
 	const handleAdditionalNoteChange = (index: number, value: string | null) => {
@@ -113,6 +115,98 @@ export default function Home() {
 
 		setAdditionalNotesList(filteredNotes);
 	};
+	const availableHeights = useMemo(
+		() => selectedCribData?.heights || [],
+		[selectedCribData]
+	);
+
+	useEffect(() => {
+		if (!selectedHeight) return;
+		if (!availableHeights.includes(selectedHeight)) {
+			setAdditionalNotesList((prev) => {
+				if (!prev.includes("Zmiana wysokości")) {
+					return ["Zmiana wysokości", ...prev];
+				}
+				return prev;
+			});
+		} else {
+			setAdditionalNotesList((prev) =>
+				prev.filter((note) => note !== "Zmiana wysokości")
+			);
+		}
+	}, [selectedHeight, availableHeights]);
+
+	useEffect(() => {
+		setAdditionalChanges((prev) => {
+			const newChanges = prev.filter(
+				(change) =>
+					!change.includes("+dopłata za niestandardowe wymiary") &&
+					!change.includes("+Regulowana wysokość materaca") &&
+					!change.includes("+Dodatkowe nogi") &&
+					!change.includes("+Factory") &&
+					!change.includes("+Otwierane boki") &&
+					!change.includes("+System kołysania") &&
+					!change.includes("+Dodatkowy schowek") &&
+					!change.includes("+Montaż do ściany") &&
+					!change.includes("+Mobilne kółka") &&
+					!change.includes("+Antyalergiczne wykończenie") &&
+					!change.includes("+Ekologiczne materiały") &&
+					!change.includes("+Wzmocnione elementy konstrukcji") &&
+					!change.includes("+Zmiana wysokości")
+			);
+
+			if (
+				selectedDimensions === "niestandardowe" &&
+				selectedLength &&
+				selectedWidth
+			) {
+				newChanges.push(
+					` +dopłata za niestandardowe wymiary ${selectedLength}x${selectedWidth}`
+				);
+			}
+
+			if (additionalNotesList.includes("Regulowana wysokość materaca")) {
+				newChanges.push(" +Regulowana wysokość materaca");
+			}
+			if (additionalNotesList.includes("Dodatkowe nogi")) {
+				newChanges.push(" +Dodatkowe nogi");
+			}
+			if (additionalNotesList.includes("Otwierane boki")) {
+				newChanges.push(" +Otwierane boki");
+			}
+			if (additionalNotesList.includes("System kołysania")) {
+				newChanges.push(" +System kołysania");
+			}
+			if (additionalNotesList.includes("Dodatkowy schowek")) {
+				newChanges.push(" +Dodatkowy schowek");
+			}
+			if (additionalNotesList.includes("Montaż do ściany")) {
+				newChanges.push(" +Montaż do ściany");
+			}
+			if (additionalNotesList.includes("Mobilne kółka")) {
+				newChanges.push(" +Mobilne kółka");
+			}
+			if (additionalNotesList.includes("Antyalergiczne wykończenie")) {
+				newChanges.push(" +Antyalergiczne wykończenie");
+			}
+			if (additionalNotesList.includes("Ekologiczne materiały")) {
+				newChanges.push(" +Ekologiczne materiały");
+			}
+			if (additionalNotesList.includes("Wzmocnione elementy konstrukcji")) {
+				newChanges.push(" +Wzmocnione elementy konstrukcji");
+			}
+			if (additionalNotesList.includes("Zmiana wysokości")) {
+				newChanges.push(" +Zmiana wysokości");
+			}
+			return newChanges;
+		});
+	}, [
+		selectedDimensions,
+		additionalNotesList,
+		setAdditionalChanges,
+		selectedLength,
+		selectedWidth,
+	]);
 	const handleSelectionChange = (selected: string[]) => {
 		setSelectedPhrases(selected);
 	};
@@ -122,12 +216,13 @@ export default function Home() {
 		setSelectedColor(null);
 		setSelectedSide(null);
 		setSelectedLength(null);
-		setSelectedWith(null);
+		setselectedWidth(null);
 		setSelectedHeight(null);
 		setSelectedMaterial(null);
 		setSelectedLegs(null);
 		setSelectedDimensions(null);
 		setAdditionalNotesList([""]);
+		setAdditionalChanges([]);
 		setSelectedPhrases([]);
 	};
 	return (
@@ -205,9 +300,9 @@ export default function Home() {
 									<LabeledDropdown
 										title="Szerokość:"
 										items={cribStandardWidths.map((width) => width)}
-										onSelect={setSelectedWith}
-										onInputChange={setSelectedWith}
-										value={selectedWith}
+										onSelect={setselectedWidth}
+										onInputChange={setselectedWidth}
+										value={selectedWidth}
 									/>
 								</div>
 							)}
@@ -235,7 +330,7 @@ export default function Home() {
 									items={sortedLegs}
 									onSelect={setSelectedLegs}
 									onInputChange={setSelectedLegs}
-									value={defaultLegs || ""}
+									value={selectedLegs || defaultLegs || ""}
 								/>
 							</div>
 
@@ -262,6 +357,23 @@ export default function Home() {
 							/>
 						</div>
 					</Accordion>
+				</div>
+				<div>
+					<EditableGrid
+						selectedCrib={selectedCrib}
+						selectedModel={selectedModel}
+						selectedColor={selectedColor}
+						selectedSide={selectedSide}
+						selectedLength={selectedLength}
+						selectedWidth={selectedWidth}
+						selectedHeight={selectedHeight}
+						selectedMaterial={selectedMaterial}
+						selectedLegs={selectedLegs}
+						selectedDimensions={selectedDimensions}
+						additionalNotesList={additionalNotesList}
+						additionalChanges={additionalChanges}
+						selectedPhrases={selectedPhrases}
+					/>
 				</div>
 			</div>
 		</main>
