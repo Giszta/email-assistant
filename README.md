@@ -1,39 +1,34 @@
-# email-assistant
-=======
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ✉️ Email Assistant
 
-## Getting Started
+## 📌 About the Project
 
-First, run the development server:
+This is a **beta version** with a modified database containing different products and attributes. It was created to **demonstrate the capabilities** of the tool. The full version is significantly more advanced, built on **over 500 catalog pages*** and an **internal database***. The tool is continuously being expanded with new functionalities to partially **automate the email response process** and **streamline onboarding for new employees**. Built with **Next.js**, this application allows users to configure and generate email templates, customize messages, and optimize their workflow. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🎬 Demo
+🖥️ Working live demo <a href="https://email-assistant-ruddy.vercel.app/" target="_blank">here</a>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+-  **Configurable email templates** – Easily create and modify email structures  
+-  **Dynamic content selection** – Select predefined phrases and additional notes  
+-  **Real-time customization** – Update email content dynamically  
+-  **Intuitive UI** – User-friendly interface for quick interactions  
+-  **Optimized performance** – Built using modern web technologies  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎬 Demo
+🖥️ Working live demo <a href="https://email-assistant-ruddy.vercel.app/" target="_blank">here</a>
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend:** Next.js, React  
+- **State Management:** useState, useEffect, useMemo  
+- **UI Components:** TailwindCSS  
+  
+<!-- ## 📸 Gifs & Screenshots -->
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📧 Contact
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Created by <a href="https://www.linkedin.com/in/adam-giszter/" target="_blank">Adam Giszter</a> - feel free to contact me!.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
+📩 Email: [a.m.giszter@gmail.com](mailto:a.m.giszter@gmail.com)  
+🔗 GitHub: [github.com/Giszta](https://github.com/Giszta)  
