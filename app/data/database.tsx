@@ -57,7 +57,7 @@ export const cribStandardDimensions = [
 
 export const additionalNotes = [
 	"Regulowana wysokość materaca",
-	"Dodatkowy stabilizator",
+	"Dodatkowe nogi",
 	"Otwierane boki",
 	"System kołysania",
 	"Dodatkowy schowek",
@@ -120,8 +120,8 @@ export const cribs: Crib[] = [
 		],
 		heights: ["950"],
 		getAvailableColors: (selectedModel) => {
-			if (selectedModel) {
-				return ["White", "Grey"];
+			if (selectedModel.includes("Soft")) {
+				return ["White"];
 			}
 			return ["White", "Grey"];
 		},
