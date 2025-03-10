@@ -14,7 +14,9 @@ import {
 	getAvailableLegs,
 	cribStandardDimensions,
 	additionalNotes,
+	standardPhrases,
 } from "./data/database";
+import StandardPhrases from "./components/StandardPhrases";
 
 export default function Home() {
 	const [selectedCrib, setSelectedCrib] = useState<string | null>("");
@@ -32,6 +34,7 @@ export default function Home() {
 	const [additionalNotesList, setAdditionalNotesList] = useState<string[]>([
 		"",
 	]);
+	const [selectedPhrases, setSelectedPhrases] = useState<string[]>([]);
 
 	const handleCribSelection = (selectedCrib: string | null) => {
 		setSelectedCrib(selectedCrib);
@@ -110,7 +113,9 @@ export default function Home() {
 
 		setAdditionalNotesList(filteredNotes);
 	};
-
+	const handleSelectionChange = (selected: string[]) => {
+		setSelectedPhrases(selected);
+	};
 	const resetSelections = () => {
 		setSelectedCrib(null);
 		setSelectedModel(null);
@@ -123,6 +128,7 @@ export default function Home() {
 		setSelectedLegs(null);
 		setSelectedDimensions(null);
 		setAdditionalNotesList([""]);
+		setSelectedPhrases([]);
 	};
 	return (
 		<main className="bg-stone-900 min-h-screen h-auto">
@@ -248,7 +254,13 @@ export default function Home() {
 						</div>
 					</Accordion>
 					<Accordion title="Standardowe Frazy">
-						<div></div>
+						<div>
+							<StandardPhrases
+								options={standardPhrases}
+								selectedPhrases={selectedPhrases}
+								onSelectionChange={handleSelectionChange}
+							/>
+						</div>
 					</Accordion>
 				</div>
 			</div>
