@@ -9,6 +9,52 @@ export const cribColors = [
 	"Bamboo",
 ];
 
+export const sides = ["Lewa", "Prawa", "Uniwersalna", "Nie określono"];
+
+export const cribStandardLengths = ["120", "140", "160", "180", "200"];
+
+export const cribStandardWidths = ["60", "70", "80", "90", "100"];
+
+export const getAvailableLegs = (
+	selectedColor: string,
+	selectedMaterial: string
+) => {
+	const cleanColor = selectedColor.replace(/(✅|❌)\s*/g, "").toLowerCase();
+	const cleanMaterial = selectedMaterial.trim().toLowerCase();
+	if (
+		["white", "black"].includes(cleanColor) &&
+		["metal"].includes(cleanMaterial)
+	) {
+		return [
+			"Nogi standardowe",
+			"Nogi regulowane",
+			"Podstawa bujana",
+			"Kółka",
+			"Mocowanie do ściany",
+		];
+	}
+
+	if (cleanColor === "brushed metal" && ["metal"].includes(cleanMaterial)) {
+		return [
+			"Nogi standardowe",
+			"Nogi regulowane",
+			"Podstawa bujana",
+			"Mocowanie do ściany",
+		];
+	}
+
+	return ["Nogi standardowe", "Nogi regulowane"];
+};
+
+export const cribStandardDimensions = [
+	"120x60",
+	"140x70",
+	"160x80",
+	"180x90",
+	"200x100",
+	"niestandardowe",
+];
+
 export const additionalNotes = [
 	"Regulowana wysokość materaca",
 	"Dodatkowy stabilizator",
@@ -31,58 +77,21 @@ export const standardPhrases = [
 	"Nie zalecamy montażu na nierównych powierzchniach, aby uniknąć niestabilności.",
 ];
 
-export const cribMaterials = ["Drewno", "Metal", "Bambus"];
-
-export const mattressSizes = ["90x50", "120x60", "140x70", "160x80", "180x90"];
-
-export const cribLayouts = [
-	"Classic I",
-	"Classic II",
-	"Modern I",
-	"Modern II",
-	"XL",
-	"Soft I",
-	"Soft II",
-	"Soft III",
-	"Hard I",
-	"Mini I",
-	"Mini II",
-	"Mini III",
-	"Comfort I",
-	"Comfort II",
-	"Comfort III",
-	"Deluxe I",
-	"Deluxe II",
-	"Deluxe III",
-	"Deluxe IV",
-];
-
-export const cribHeights = ["850", "900", "920", "950", "980", "1000", "1100"];
-
-export const cribLegs = [
-	"Nogi standardowe",
-	"Nogi regulowane",
-	"Podstawa bujana",
-	"Kółka",
-	"Mocowanie do ściany",
-];
-
-interface Crib {
+export interface Crib {
 	name: string;
-	layouts: {
+	models: {
 		name: string;
 		legs: string[];
 	}[];
 	heights: string[];
-	getAvailableColors: (selectedLayout: string) => string[];
+	getAvailableColors: (selectedModel: string) => string[];
 	material: string[];
-	mattress_sizes: string[];
 }
 
 export const cribs: Crib[] = [
 	{
 		name: "DreamNest",
-		layouts: [
+		models: [
 			{ name: "Classic I", legs: ["Nogi standardowe"] },
 			{ name: "Classic II", legs: ["Nogi regulowane"] },
 			{ name: "Modern I", legs: ["Podstawa bujana"] },
@@ -90,74 +99,81 @@ export const cribs: Crib[] = [
 			{ name: "XL", legs: ["Mocowanie do ściany"] },
 		],
 		heights: ["900", "1000", "1100"],
-		getAvailableColors: (selectedLayout) => {
-			if (selectedLayout.includes("Modern")) {
+		getAvailableColors: (selectedModel) => {
+			if (selectedModel.includes("Modern")) {
 				return ["White", "Black"];
 			}
-			if (selectedLayout.includes("Classic")) {
+			if (selectedModel.includes("Classic")) {
 				return ["Natural Wood", "White"];
 			}
 			return ["White", "Black", "Natural Wood", "Grey"];
 		},
 		material: ["Drewno", "Metal"],
-		mattress_sizes: ["120x60", "140x70"],
 	},
 	{
 		name: "BabyComfort",
-		layouts: [
+		models: [
 			{ name: "Soft I", legs: ["Nogi standardowe"] },
 			{ name: "Soft II", legs: ["Nogi regulowane"] },
 			{ name: "Soft III", legs: ["Kółka"] },
 			{ name: "Hard I", legs: ["Podstawa bujana"] },
 		],
 		heights: ["950"],
-		getAvailableColors: (selectedLayout) => {
+		getAvailableColors: (selectedModel) => {
+			if (selectedModel) {
+				return ["White", "Grey"];
+			}
 			return ["White", "Grey"];
 		},
 		material: ["Drewno"],
-		mattress_sizes: ["120x60"],
 	},
 	{
 		name: "TinySleep",
-		layouts: [
+		models: [
 			{ name: "Mini I", legs: ["Nogi standardowe"] },
 			{ name: "Mini II", legs: ["Nogi regulowane"] },
 			{ name: "Mini III", legs: ["Kółka"] },
 		],
 		heights: ["850", "900"],
-		getAvailableColors: (selectedLayout) => {
+		getAvailableColors: (selectedModel) => {
+			if (selectedModel) {
+				return ["White", "Natural Wood"];
+			}
 			return ["White", "Natural Wood"];
 		},
 		material: ["Drewno"],
-		mattress_sizes: ["90x50"],
 	},
 	{
 		name: "CozyCrib",
-		layouts: [
+		models: [
 			{ name: "Comfort I", legs: ["Nogi standardowe"] },
 			{ name: "Comfort II", legs: ["Nogi regulowane"] },
 			{ name: "Comfort III", legs: ["Podstawa bujana"] },
 		],
 		heights: ["920", "980"],
-		getAvailableColors: (selectedLayout) => {
+		getAvailableColors: (selectedModel) => {
+			if (selectedModel) {
+				return ["White", "Grey", "Natural Wood"];
+			}
 			return ["White", "Grey", "Natural Wood"];
 		},
 		material: ["Drewno", "Bambus"],
-		mattress_sizes: ["120x60"],
 	},
 	{
 		name: "SleepWell",
-		layouts: [
+		models: [
 			{ name: "Deluxe I", legs: ["Nogi standardowe"] },
 			{ name: "Deluxe II", legs: ["Nogi regulowane"] },
 			{ name: "Deluxe III", legs: ["Kółka"] },
 			{ name: "Deluxe IV", legs: ["Mocowanie do ściany"] },
 		],
 		heights: ["900", "1000"],
-		getAvailableColors: (selectedLayout) => {
+		getAvailableColors: (selectedModel) => {
+			if (selectedModel) {
+				return ["White", "Black", "Natural Wood", "Brushed Metal"];
+			}
 			return ["White", "Black", "Natural Wood", "Brushed Metal"];
 		},
 		material: ["Drewno", "Metal"],
-		mattress_sizes: ["120x60", "140x70"],
 	},
 ];
