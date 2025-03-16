@@ -169,24 +169,24 @@ const EditableGrid: React.FC<EditableGridProps> = (props) => {
 										</td>
 									</motion.tr>
 								)}
-								{tableData.selectedDimensions ||
+								{(tableData.selectedDimensions ||
 									tableData.selectedLength ||
-									(tableData.selectedWidth && (
-										<motion.tr
-											initial={{ opacity: 0, y: 5 }}
-											animate={{ opacity: 1, y: 0 }}
-											exit={{ opacity: 0, y: 5 }}
-											transition={{ duration: 0.4, ease: "easeInOut" }}
+									tableData.selectedWidth) && (
+									<motion.tr
+										initial={{ opacity: 0, y: 5 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: 5 }}
+										transition={{ duration: 0.4, ease: "easeInOut" }}
+									>
+										<td
+											className="table-label"
+											style={{ textAlign: "right", fontWeight: "bold" }}
 										>
-											<td
-												className="table-label"
-												style={{ textAlign: "right", fontWeight: "bold" }}
-											>
-												Wymiary:
-											</td>
-											<td className="table-value">{getDimensions()}</td>
-										</motion.tr>
-									))}
+											Wymiary:
+										</td>
+										<td className="table-value">{getDimensions()}</td>
+									</motion.tr>
+								)}
 								{tableData.selectedSide && (
 									<motion.tr
 										initial={{ opacity: 0, y: 5 }}
